@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Secret Love 💕</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Kanit', sans-serif;
+    text-align: center;
+    background: linear-gradient(to right, #ffd6e0, #ffe6f0);
+}
+
+/* intro */
+#intro {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#countdown {
+    font-size: 50px;
+    color: #ff4d6d;
+}
+
+/* game */
+#game {
+    display: none;
+    margin-top: 80px;
+}
+
+/* ปุ่ม */
+.btn-container {
+    margin-top: 40px;
+}
+
+button {
+    padding: 20px 40px;
+    font-size: 22px;
+    border: none;
+    border-radius: 20px;
+    margin: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#loveBtn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background-color: #888;
+    color: white;
+    position: relative;
+}
+
+/* popup */
+#popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+#popupContent {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    text-align: center;
+    animation: pop 0.3s ease;
+}
+
+@keyframes pop {
+    from { transform: scale(0.5); }
+    to { transform: scale(1); }
+}
+
+.heart {
+    position: absolute;
+    font-size: 24px;
+    animation: float 2s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); opacity: 1; }
+    100% { transform: translateY(-200px); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- intro -->
+<div id="intro">
+    <h1>มีอะไรจะบอก... 💌</h1>
+    <div id="countdown">3</div>
+</div>
+
+<!-- game -->
+<div id="game">
+    <h1>เค้ารักตัวเองนะ 💕 แล้วตัวเองล่ะ?</h1>
+
+    <div class="btn-container">
+        <button id="loveBtn">รัก 💖</button>
+        <button id="noBtn">ไม่รัก 😢</button>
+    </div>
+</div>
+
+<!-- popup -->
+<div id="popup">
+    <div id="popupContent">
+        <h2>รักเหมือนกันนะ 💖🥰</h2>
+        <p>ดีใจที่สุดเลยยย 💕</p>
+        <button onclick="closePopup()">ปิด</button>
+    </div>
+</div>
+
+<script>
+let count = 3;
+let countdown = document.getElementById("countdown");
+let intro = document.getElementById("intro");
+let game = document.getElementById("game");
+
+let loveBtn = document.getElementById("loveBtn");
+let noBtn = document.getElementById("noBtn");
+let popup = document.getElementById("popup");
+
+// countdown
+let timer = setInterval(() => {
+    count--;
+    countdown.innerText = count;
+
+    if(count === 0){
+        clearInterval(timer);
+        intro.style.display = "none";
+        game.style.display = "block";
+    }
+}, 1000);
+
+// ให้ปุ่มหนีหลังจากกดครั้งแรก
+let firstClick = false;
+
+noBtn.addEventListener("click", () => {
+    firstClick = true;
+    moveBtn();
+});
+
+noBtn.addEventListener("mouseover", () => {
+    if(firstClick){
+        moveBtn();
+    }
+});
+
+function moveBtn(){
+    let x = Math.random() * (window.innerWidth - 120);
+    let y = Math.random() * (window.innerHeight - 60);
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// กดรัก = popup
+loveBtn.addEventListener("click", () => {
+    popup.style.display = "flex";
+    hearts();
+});
+
+function closePopup(){
+    popup.style.display = "none";
+}
+
+// hearts effect
+function hearts(){
+    for(let i=0;i<20;i++){
+        let h=document.createElement("div");
+        h.className="heart";
+        h.innerHTML="💖";
+        h.style.left=Math.random()*window.innerWidth+"px";
+        h.style.top=window.innerHeight+"px";
+        document.body.appendChild(h);
+        setTimeout(()=>h.remove(),2000);
+    }
+}
+</script>
+
+</body>
+</html>
